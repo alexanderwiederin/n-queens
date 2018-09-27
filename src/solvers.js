@@ -99,13 +99,35 @@ window.findNQueensSolution = function(n) {
 window.countNQueensSolutions = function(n) {
   var solutionCount = 0; //fixme
   var board = new Board({'n': n});
-  if (n === 2 || n === 3) {
-    return solutionCount;
+  var row = 0;
+  if (n === 0) {
+    return 1;
   }
   
-  var recursiveFunc = function() {
-    
+  var recursiveFunc = function () {
+    for (var col = 0; col < n; col++) {
+      board.togglePiece(row, col);
+      if (board.hasAnyQueensConflicts()) {
+        board.togglePiece(row, col);
+      } else {
+        if (countPieces(board.rows()) === n) {
+          solutionCount++;
+          board.togglePiece(row, col);
+          return;
+        } else {
+          row++;
+          if (row === n) {
+            return;
+          }
+          recursiveFunc();
+          row--;
+          board.togglePiece(row, col);
+        }
+      }
+    }
   };
+  
+  recursiveFunc();
 
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
