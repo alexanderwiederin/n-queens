@@ -63,7 +63,7 @@
 
 
 
-    hasRowConflictAt: function(rowIndex) { // fixme
+    hasRowConflictAt: function(rowIndex) { // O(n)
       var count = 0;
       var targetRow = this.attributes[rowIndex];
       
@@ -80,7 +80,7 @@
     },
 
     // test if any rows on this board contain conflicts
-    hasAnyRowConflicts: function() {
+    hasAnyRowConflicts: function() { // O(n)
       
       for (var row in this.attributes) {
         
@@ -98,7 +98,7 @@
     // --------------------------------------------------------------
     //
     // test if a specific column on this board contains a conflict
-    hasColConflictAt: function(colIndex) {
+    hasColConflictAt: function(colIndex) { // O(n)
       var counter = 0;
       for (var row in this.attributes) {
         if (this.attributes[row][colIndex] === 1) {
@@ -113,7 +113,7 @@
     },
 
     // test if any columns on this board contain conflicts
-    hasAnyColConflicts: function() {
+    hasAnyColConflicts: function() { // O(n**2)
       
       var n = this.attributes.n;
       
@@ -131,7 +131,7 @@
     // --------------------------------------------------------------
     //
     // test if a specific major diagonal on this board contains a conflict
-    hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+    hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) { // O(n)
       var counter = 0;
    
       var board = this.attributes;
@@ -152,7 +152,7 @@
     },
 
     // test if any major diagonals on this board contain conflicts
-    hasAnyMajorDiagonalConflicts: function() {
+    hasAnyMajorDiagonalConflicts: function() { // O(2n)
 
       var board = this.attributes;
       var boardLength = this.attributes.n; //4
@@ -173,7 +173,7 @@
     // --------------------------------------------------------------
     //
     // test if a specific minor diagonal on this board contains a conflict
-    hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+    hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) { // O(n)
       var counter = 0;
       var board = this.attributes;
       for (var row = 0; row < this.attributes.n; row++) {
@@ -189,7 +189,7 @@
     },
 
     // test if any minor diagonals on this board contain conflicts
-    hasAnyMinorDiagonalConflicts: function() {
+    hasAnyMinorDiagonalConflicts: function() { // O(2n)
       var board = this.attributes;
       var boardLength = this.attributes.n; //4
       
