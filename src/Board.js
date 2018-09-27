@@ -62,28 +62,33 @@
     },
 
 
-/*
-         _             _     _
-     ___| |_ __ _ _ __| |_  | |__   ___ _ __ ___ _
-    / __| __/ _` | '__| __| | '_ \ / _ \ '__/ _ (_)
-    \__ \ || (_| | |  | |_  | | | |  __/ | |  __/_
-    |___/\__\__,_|_|   \__| |_| |_|\___|_|  \___(_)
 
- */
-    /*=========================================================================
-    =                 TODO: fill in these Helper Functions                    =
-    =========================================================================*/
-
-    // ROWS - run from left to right
-    // --------------------------------------------------------------
-    //
-    // test if a specific row on this board contains a conflict
-    hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+    hasRowConflictAt: function(rowIndex) { // fixme
+      var count = 0;
+      var targetRow = this.attributes[rowIndex];
+      
+      for (var i = 0; i < targetRow.length; i++) {
+        if (targetRow[i] === 1) {
+          count++;
+        }
+      } 
+      
+      if (count > 1) {
+        return true;
+      }
+      return false;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
+      
+      for (var row in this.attributes) {
+        
+        if (this.hasRowConflictAt(row)) {
+          return true;
+        }
+        
+      }
       return false; // fixme
     },
 
@@ -94,11 +99,29 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      var counter = 0;
+      for (var row in this.attributes) {
+        if (this.attributes[row][colIndex] === 1) {
+          counter++;
+        }  
+      }
+      
+      if (counter > 1) {
+        return true;
+      }
+      return false; 
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      
+      var n = this.attributes.n;
+      
+      for (var i = 0; i < n; i++) {
+        if (this.hasColConflictAt(i)) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
@@ -109,12 +132,39 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      var counter = 0;
+   
+      var board = this.attributes;
+      
+      for (var row in this.attributes) {
+        
+        if (board[row][majorDiagonalColumnIndexAtFirstRow] === 1) {
+          counter++;
+        }
+        majorDiagonalColumnIndexAtFirstRow++;
+      }
+      
+      if (counter > 1) {
+        return true;
+      }
+      
       return false; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+
+      var board = this.attributes;
+      var boardLength = this.attributes.n; //4
+      
+      for (var j = 0 - boardLength; j < boardLength; j++) {
+        var a = this.hasMajorDiagonalConflictAt(j);
+        if (a) {
+          return true;
+        }
+      }
+      
+      return false;
     },
 
 
@@ -124,11 +174,31 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+      var counter = 0;
+      var board = this.attributes;
+      for (var row = 0; row < this.attributes.n; row++) {
+        if (board[row][minorDiagonalColumnIndexAtFirstRow] === 1) {
+          counter++;
+        }
+        minorDiagonalColumnIndexAtFirstRow--;
+      }
+      if (counter > 1) {
+        return true;
+      }
       return false; // fixme
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
+      var board = this.attributes;
+      var boardLength = this.attributes.n; //4
+      
+      for (var j = 2 * boardLength; j >= 0; j--) {
+        var a = this.hasMinorDiagonalConflictAt(j);
+        if (a) {
+          return true;
+        }
+      }
       return false; // fixme
     }
 
